@@ -47,7 +47,9 @@ protected:
 		}
 	}
 	void RollRecur(int faceNumber_Int, int times_Int, int step) {		//用递归做骰子查重,此函数无法拒绝异常数据
-		if (step <= -1) {
+	//	cout << step << endl;											//递归排障代码
+		if (step < 0) {
+	//		cout << "YES" << endl;										//递归排障代码
 			return;
 		}
 		int rollTemp = 0;
@@ -57,7 +59,7 @@ protected:
 			if (rollTemp == 0) {
 				rollTemp = faceNumber_Int;
 			}															//把0~(X-1)的随机数变成1~X
-			//cout << rollTemp << endl;									//运算时数组内容显示
+		//	cout << rollTemp << endl;									//运算时数组内容显示
 			flagtemp_Bool = true;										//重新赋值
 			for (int i = 0; i < times_Int; i++) {						//遍历数组查重
 				if (Roll_Answer[i] == rollTemp) {
@@ -66,8 +68,9 @@ protected:
 				}
 			}
 			if (flagtemp_Bool) {
-				Roll_Answer[faceNumber_Int - (faceNumber_Int - step)] = rollTemp;
+				Roll_Answer[step] = rollTemp;
 				RollRecur(faceNumber_Int, times_Int, step - 1);
+	//			cout << "FI" << endl;									//递归排障代码
 				return;
 			}
 		}
@@ -144,7 +147,6 @@ protected:
 			exit(-1);
 		}
 		Roll Roll1;
-		Roll1.RollMain(faceNumber_Int, times_Int, times_Int);
 			if (Roll1.RollCheck(faceNumber_Int, times_Int, flagRecur_Bool)) {
 				Roll1.RollMain(faceNumber_Int, times_Int, flagRecur_Bool);
 			}else {
